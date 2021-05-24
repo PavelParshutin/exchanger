@@ -1,0 +1,48 @@
+<div class="page-wrapper">
+  <p>
+    Welcome to the NEO Fintech Lab interview test. On the next page,
+    you will see a basic currency converter for buying British Pounds (£GBP) and paying in Euros (€EUR).
+  </p>
+  <p>
+    A user can enter the amount in £GBP that they want to buy and the cost in €EUR will be displayed on screen.
+    Currently, there is no way to enter the amount in €EUR that they want to sell
+    and see the amount in £GBP that they will receive. Your task is to add this functionality.
+  </p>
+  <h2>
+    User story
+  </h2>
+  <p>
+    As a user, I want to select the amount to buy (£GBP) <strong>or</strong> the amount to sell (€EUR) and be shown
+    the corresponding amount based on the current exchange rate, so that I can trade whether I need to buy a specific
+    amount of £GBP or have a specific amount of €EUR to sell.
+  </p>
+  <h2>
+    Acceptance criteria
+  </h2>
+  <ul>
+    <li>I can enter <strong>either</strong> the sell amount <strong>or</strong> the buy amount,
+      and the other field updates as the exchange rate changes
+    </li>
+    <li>
+      At all times, I can tell which field is <strong>locked</strong> (the one I typed in)
+      and which field is <strong>reactive</strong> (the one that reacts to the exchange rate)
+    </li>
+    <li>
+      Entering an amount into either field will <strong>lock</strong> that field,
+      making the other field <strong>reactive</strong>
+    </li>
+  </ul>
+  <p>As a plus, try to make a WebApi backend that easly make the same thing price servise is making now.
+  </p>
+  <p>
+    Click <a routerLink="/trade">'trade'</a> to move to the next page and see the trade form you'll be working on.
+  </p>
+  <p>
+    When you have completed this task, please compress your folders into a zip file
+    and send it through UpWork sistem.
+    You may be asked to present your solution at interview and we will discuss the approach you took.
+  </p>
+  <div class="form-actions">
+    <button mat-raised-button color="primary" class="button-right" routerLink="/trade">Trade</button>
+  </div>
+</div>
