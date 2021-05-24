@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FxRatesService } from "../fx-rates.service";
-import {Subject} from 'rxjs/Subject';
-import {takeLast, takeUntil} from 'rxjs/operators';
+import { FxRatesService } from '../fx-rates.service';
+
+type Option = 'buy' | 'sell';
 
 @Component({
   selector: 'app-trade',
@@ -11,44 +11,41 @@ import {takeLast, takeUntil} from 'rxjs/operators';
 export class TradeComponent implements OnInit {
   public buyAmount: number;
   public sellAmount: number;
-  activeAmount: string
+  public activeOption: Option;
   public currentPrice: number;
-  unsubscribe$: Subject<any>
 
   constructor(
     private fxRates: FxRatesService
   ) {}
 
   ngOnInit() {
-    this.unsubscribe$ = new Subject<any>()
-    this.fxRates.getFeed().pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.fxRates.getFeed().subscribe(
       response => {
-        console.log(response)
         this.currentPrice = response;
+
+        switch (this.activeOption) {
+          case 'buy':
+            this.sellAmount = parseFloat((this.buyAmount * this.currentPrice).toFixed(2));
+            break;
+          case 'sell':
+            this.buyAmount = parseFloat((this.sellAmount / this.currentPrice).toFixed(2));
+            break;
+        }
       },
       error => {
         alert('Error fetching rate feed.');
         console.warn('Error fetching rate feed.', error);
       }
     );
-
-  }
-  onFocus() {
-      this.unsubscribe$.next()
-      this.unsubscribe$.complete()
-    this.fxRates.getFeed().subscribe(response => this.currentPrice = response)
-  }
-  onChange(option) {
-    this.activeAmount = option
-    if(this.activeAmount === 'buy amount') {
-      this.sellAmount = this.buyAmount * this.currentPrice;
-    } else {
-      this.buyAmount = this.sellAmount * this.currentPrice;
-    }
   }
 
-  public submit ( amount, rate ) {
-    alert('You bought £' + amount + ' for €' + ( rate * amount ).toFixed(2));
+  public submit ( amount, rate, option: Option ) {
+    const alertMessage = option === 'buy'
+      ? 'You bought £' + amount + ' for €' + ( rate * amount ).toFixed(2)
+      : 'You sold €' + amount + ' for £' + ( amount / rate ).toFixed(2);
+    alert(alertMessage);
+    this.buyAmount = this.sellAmount = null;
   }
+
 
 }
