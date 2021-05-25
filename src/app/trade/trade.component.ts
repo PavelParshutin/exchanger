@@ -44,8 +44,7 @@ export class TradeComponent implements OnInit {
       ? 'You bought £' + amount + ' for €' + ( rate * amount ).toFixed(2)
       : 'You sold €' + amount + ' for £' + ( amount / rate ).toFixed(2);
     alert(alertMessage);
-    this.buyAmount = this.sellAmount = null;
+    this.buyAmount = 0;
+    this.sellAmount = 0;
   }
-
-
 }
